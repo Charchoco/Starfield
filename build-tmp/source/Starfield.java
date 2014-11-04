@@ -1,6 +1,22 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class Starfield extends PApplet {
+
 Particle[] stars = new Particle[50];
 JumboParticle jp = new JumboParticle(8);
-void setup()
+public void setup()
 {
 	background(0);
 	size(300,300);
@@ -12,7 +28,7 @@ void setup()
 	}
 }
 
-void draw()
+public void draw()
 {
 	background(0);
 	for (int i = 1; i < stars.length; i++)
@@ -26,7 +42,7 @@ void draw()
 	stars[0].show();
 }
 
-void mousePressed()
+public void mousePressed()
 {
 	stars[0].move();
 	for (int i = 1; i < stars.length; i++) {
@@ -39,7 +55,7 @@ class NormalParticle implements Particle
 {
 	private double m_X, m_Y, m_Speed, m_Angle, m_SpawnX, m_SpawnY;
 	public int m_Size;
-	public color pC;
+	public int pC;
 
 	NormalParticle(double nsX, double nsY)
 	{
@@ -64,7 +80,7 @@ class NormalParticle implements Particle
 		m_Size = 26;
 	}
 
-	void move()
+	public void move()
 	{
 		m_X += Math.cos(m_Angle)*m_Speed;
 		m_Y += Math.sin(m_Angle)*m_Speed;
@@ -76,20 +92,20 @@ class NormalParticle implements Particle
 		}
 	}
 
-	void show()
+	public void show()
 	{
 		fill(pC);
 		ellipse((float)m_X, (float)m_Y, m_Size, m_Size);
 	}
 
-	void setSpawn(double nX, double nY)
+	public void setSpawn(double nX, double nY)
 	{
 		m_SpawnX = nX;
 		m_SpawnY = nY;
 	}
 
-	double getX(){return m_X;}
-	double getY(){return m_Y;}
+	public double getX(){return m_X;}
+	public double getY(){return m_Y;}
 }
 
 class JumboParticle extends NormalParticle
@@ -104,7 +120,7 @@ class JumboParticle extends NormalParticle
 		super();
 		m_Size = nSize;
 	}
-	void reColor()
+	public void reColor()
 	{
 		pC = color((int)(Math.random()*255), (int)(Math.random()*255), (int)(Math.random()*255));
 	}
@@ -128,18 +144,27 @@ class OddballParticle implements Particle
 		m_Y = 150;
 	}
 
-	void move()
+	public void move()
 	{
 		m_X = mouseX;
 		m_Y = mouseY;
 	}
 
-	void show()
+	public void show()
 	{
 		fill(0);
 		ellipse((float)m_X, (float)m_Y, 4, 4);
 	}
 
-	double getX(){return m_X;}
-	double getY(){return m_Y;}
+	public double getX(){return m_X;}
+	public double getY(){return m_Y;}
+}
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "Starfield" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }
