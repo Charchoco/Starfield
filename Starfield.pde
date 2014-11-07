@@ -102,7 +102,7 @@ class JumboParticle extends NormalParticle
 	JumboParticle(int nSize)
 	{
 		super();
-		m_Size = nSize;
+		m_Size = 24;
 	}
 	void reColor()
 	{
